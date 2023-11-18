@@ -52,7 +52,7 @@ void Pilha::Menu() {
             break; 
         
         case 6:
-            cout << this->mostrarEndereco(meio)->valor;
+            cout << this->mostrarEndereco(meio)->ant;
             this->Menu();
             break;
 
