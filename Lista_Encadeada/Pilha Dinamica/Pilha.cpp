@@ -22,6 +22,7 @@ void Pilha::Menu() {
     cout << "[6] - Mostrar Endereco " << endl;
     cout << "[0] - Sair" << endl;
     cout << "============================" << endl;
+    cout << endl;
     cout << "Opcao: ";
     cin >> opc;
 
@@ -57,11 +58,11 @@ void Pilha::Menu() {
             break;
 
         case 0:
-            cout << "Saindo." << endl;
+            cout << "\nSaindo." << endl;
             break;
 
         default:
-            cout << "Opcao Invalida. Insira novamente" << endl;
+            cout << "\nOpcao Invalida. Insira novamente" << endl;
             this->Menu();
     }
 
@@ -69,7 +70,7 @@ void Pilha::Menu() {
 
 void Pilha::inserir() {
 
-    cout << "Digite o valor para empilhar: ";
+    cout << "\nDigite o Elemento para ser inserido: ";
     aux = (struct no*) malloc(sizeof (aux));
     cin >> aux ->valor;
 
