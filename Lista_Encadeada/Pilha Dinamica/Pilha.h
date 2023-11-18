@@ -1,28 +1,31 @@
-typedef int TipoItem;
+#include <iostream>
 
+using namespace std;
 
 struct no{
-
-   TipoItem valor;
-   no* proximo;
+    
+    int valor;
+    no *ant;
 
 };
-
 
 class Pilha{
 private:
 
-no* topo;
+    int meio;
+    no *aux, *topo;
 
 public:
 
-Pilha();
-~Pilha();
-bool estaVazio();
-bool estaCheio();
-bool pesquisar(TipoItem item);
-void inserir(TipoItem item);
-TipoItem remover();
-void imprimir();
-
+    Pilha();
+    ~Pilha();
+    void Menu();
+    bool estavazio(struct no *recebido);
+    void inserir();
+    void remover();
+    void imprimir();
+    void mostrarMeio();
+    struct no* mostrarEndereco(int meio);
+    void pesquisar();
+    
 };
