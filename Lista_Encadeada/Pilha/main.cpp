@@ -4,9 +4,9 @@
 using namespace std;
 
 int main(){
-    
+
     Pilha obj;
-    obj.Menu();
+    obj.menu();
 
     return 0;
 }

@@ -10,7 +10,6 @@ Fila::Fila(){
     aux = NULL;
 }
 
-
 Fila::~Fila(){
 
 }
@@ -23,10 +22,9 @@ void Fila::Menu(){
     cout << "[1] - Inserir valor à Fila " << endl;
     cout << "[2] - Remover valor da Fila " << endl;
     cout << "[3] - Pesquisar valores da Fila " << endl;
-    cout << "[4] - Verificar Elemento na Fila " << endl;
-    cout << "[5] - Mostrar Meio da Fila " << endl;
-    cout << "[6] - Mostrar Endereco de Memoria " << endl;
-    cout << "[7] - Mostrar Valores da Fila " << endl;
+    cout << "[4] - Mostrar Meio da Fila " << endl;
+    cout << "[5] - Mostrar Endereco de Memoria " << endl;
+    cout << "[6] - Mostrar Valores da Fila " << endl;
     cout << "[0] - Sair" << endl;
     cout << "============================" << endl;
     cout << "Opcao: ";
@@ -48,21 +46,17 @@ void Fila::Menu(){
             this->Menu();  
             break;
 
-        case 4: 
-            this ->verificarFila();
-            this ->Menu();
-            break;
-        case 5:
-            this->MostrarMeio();
+        case 4:
+            cout << this->mostrarElementomeio();
             this->Menu();
             break;
             
-        case 6:
-            cout << this->mostrarEndereco(meio)->proximo;
+        case 5:
+            cout << this->mostrarEndereco();
             this->Menu();
             break;
 
-        case 7:
+        case 6:
             this->imprimir();
             this->Menu();
             break;
@@ -75,130 +69,121 @@ void Fila::Menu(){
             cout << "\nOpcao Invalida. Tente novamente: " << endl;
             this->Menu();
     }
-
 }
 
 bool Fila::estavazio(struct no *recebido){
 
-   if (recebido == NULL)
+    if(recebido == NULL)
         return true;
     else
-        return false;   
-
+        return false;
 }
 
 void Fila::inserir(){
 
-    cout << "\nDigite o Elemento para ser inserido: ";
-    aux = (struct no*) malloc(sizeof (aux));
-    cin >> aux ->valor;
-    
-    if(primeiro == NULL){
-        primeiro = aux;
-    }else{
-        ultimo -> proximo = aux;
-    }
-    ultimo = aux;
-    ultimo ->proximo = NULL;
+    cout<<"Digite o Elemento que deseja inserir " << endl;
+    aux = (struct no*) malloc (sizeof(aux));
+    cin >> aux -> valor;
+
+   if(primeiro == NULL){
+      primeiro = aux;
+
+   }else{
+        ultimo ->proximo = aux;
+   }
+   ultimo = aux;
+   ultimo ->proximo = NULL;
 
 }
 
 void Fila::remover(){
-   
-   if (!estavazio(primeiro)) {
+
+    if(!estavazio(primeiro)){
         aux = primeiro;
-        primeiro = primeiro->proximo;
-        cout << "Removido com Sucesso.\n";
+        primeiro = primeiro ->proximo;
+        cout<<"Removido com sucesso o Elemento " << aux ->valor << endl;
         delete aux;
-        
     }
-}
-
-bool Fila::verificarFila(){
-
-    int chave;
-    
-    cout<<"Digite o Elemento que deseja verificar se esta na Fila... " << endl;
-    cin >> chave;
-
-        aux = primeiro;
-
-        while (aux != NULL){
-            if(chave == aux ->valor){
-                cout<<"Elemento encontrado na Fila " << endl;
-                return true;
-            }
-            aux = aux ->proximo;         
-        }
-        cout<<"Numero nao esta na fila... " << endl;
-        return false;
-}
-
-void Fila::MostrarMeio(){
-
-    int contador = 1;
-    int meio = 0;
-
-    aux = primeiro;
-
-        while(aux != NULL){
-           aux = aux ->proximo;
-           contador++;
-        }
-        meio = contador/2;
-        
-        cout<<"\nMeio da Fila " << meio << endl;
-}
-
-struct no* Fila::mostrarEndereco(int meio){
-   
-    int contador = 1;
-    meio =2;
-
-        aux = primeiro;
-
-        while (aux != NULL){
-            if(contador == meio){
-                return aux;
-            }
-            aux = aux ->proximo;
-            contador++;
-        }
-
 }
 
 bool Fila::pesquisar(){
 
-    int Pesq;
+    int pesq;
     aux = primeiro;
 
-    cout<<"\nDigite o valor para pesquisar o Elemento... " << endl;
-    cin>> Pesq;
+    cout<<"\nDigite o Elemento para pesquisar " << endl;
+    cin >> pesq;
+
+    while (aux != NULL){
+
+        if(pesq == aux ->valor){
+            cout<<"\nValor encontrado! " << " ["  << pesq <<  "] " << endl;
+            return true;
+        }
+        aux = aux ->proximo;      
+    }
+       cout<<"\nValor nao encontrado! " << " ["  << pesq <<  "] " << endl;
+       return false;
+  
+}
+
+int Fila::MostrarMeio(){ // serve apenas contar a quantidade de elementos e retornar o meio//
+
+    int contador = 1;
+    int meio =0;
+    aux = primeiro;
+
+    while (aux != NULL){
+        aux = aux ->proximo;
+        contador++;     
+    }
+    meio = contador/2;
+   
+    return meio;
+
+}
+
+struct no* Fila::mostrarEndereco(){ // serve para percorrer os elementos e retornar o aux do meio//
+   
+    int contador = 1;
+    int meio = this->MostrarMeio();
+    aux = primeiro;
 
     while(aux != NULL){
-    if(Pesq == aux -> valor){
-        cout<<"Elemento encontrado ... " << " [" << Pesq << "] " << endl;
-        return true;
-      }
-      aux = aux -> proximo;
+       if(meio == contador){
+        return aux;
+       }
+       aux = aux ->proximo;
+       contador++;
+    }
+    
+}
 
-   }
-    cout<<"\nElemento nao encontrado  " << " [" << Pesq << "] " << endl; 
-    return false;
+int Fila::mostrarElementomeio(){
+   
+    int contador = 1;
+    int meio = this->MostrarMeio();
+    aux = primeiro;
 
+    while(aux != NULL){
+       if(meio == contador){
+        return aux->valor;
+       }
+       aux = aux ->proximo;
+       contador++;
+    }   
 }
 
 void Fila::imprimir(){
 
-     aux = primeiro;
+    aux = primeiro;
 
     cout<<"Fila: [ ";
 
     while (aux != NULL){
-          cout<< aux -> valor << " ";
-          aux = aux ->proximo; 
+         cout<< aux -> valor << " ";
+         aux = aux ->proximo;
     }
-
-    cout<< "]\n";
-}
+    cout<<"]\n";
     
+}

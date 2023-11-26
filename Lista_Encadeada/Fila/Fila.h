@@ -9,21 +9,22 @@ struct no{
 };
 
 class Fila{
-public:
-    
-    int meio;
-    no *primeiro, *ultimo, *aux;
+private:
 
+    no *primeiro, *aux, *ultimo;
+
+public:
 
     Fila();
     ~Fila();
     void Menu();
+    bool estavazio(struct no *recebido);
     void inserir();
     void remover();
-    bool estavazio(struct no *recebido);
-    bool verificarFila();
-    void MostrarMeio();
-    struct no* mostrarEndereco(int meio);
-    bool pesquisar();
     void imprimir();
+    bool pesquisar();
+    int MostrarMeio();
+    struct no* mostrarEndereco();
+    int mostrarElementomeio();
+
 };
