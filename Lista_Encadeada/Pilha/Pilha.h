@@ -3,28 +3,27 @@
 using namespace std;
 
 struct no{
-    
+
     int valor;
-    struct no *ant;
-    
+    no* ant;   
 };
 
-class Pilha {
+class Pilha{
 public:
-    
-    no *aux;
-    no *topo;
 
-    Pilha();
-    ~Pilha();
-    void menu();
-    void inserir();
-    int repartirMeio();
-    struct no* mostrarEndereco();
-    bool vazio(struct no *recebido);
-    void remover();
-    void mostrar();
-    int mostrarValorMeio();
-    bool pesquisar();
-    
+    no *aux, *topo;
+
+ Pilha();
+ ~Pilha();
+ void menu();
+ void inserir();
+ bool estavazio(struct no* recebido);
+ void remover();
+ bool pesquisar();
+ int repartirMeio();
+ int mostrarMeio();
+ struct no* mostrarEndereco();
+ void imprimir();
+
 };
+

@@ -5,30 +5,30 @@ using namespace std;
 
 Pilha::Pilha(){
 
-     aux = NULL;
-     topo = NULL;
+    aux = NULL;
+    topo = NULL;
 }
 
 Pilha::~Pilha(){
 
 }
 
-void Pilha::menu() {
+void Pilha::menu(){
 
     int opc;
     cout << "\n=========== MENU =========== " << endl;
-    cout << "[1] - Empilhar " << endl;
-    cout << "[2] - Desempilhar" << endl;
-    cout << "[3] - Mostrar valores da pilha " << endl;
-    cout << "[4] - Pesquisar valor na pilha " << endl;
-    cout << "[5] - Mostrar Meio " << endl;
-    cout << "[6] - Mostrar endereco " << endl;
+    cout << "[1] - Inserir " << endl;
+    cout << "[2] - Remover " << endl;
+    cout << "[3] - Pesquisar valor na pilha " << endl;
+    cout << "[4] - Mostrar Meio " << endl;
+    cout << "[5] - Mostrar endereco " << endl;
+    cout << "[6] - Mostrar valores da pilha " << endl;
     cout << "[0] - Sair" << endl;
     cout << "============================" << endl;
     cout << "Opcao: ";
     cin >> opc;
 
-    switch (opc) {
+        switch (opc) {
         case 1:
             this->inserir();
             this->menu();
@@ -38,138 +38,127 @@ void Pilha::menu() {
             this->remover();
             this->menu();
             break;
-
-        case 3:
-            this->mostrar();
-            this->menu();
-            break;
             
-        case 4:
+        case 3:
             this->pesquisar();
             this->menu();
             break;
 
-        case 5:
-        cout << this->mostrarValorMeio();
-        this->menu();
-        break;
-
-        case 6:
-        cout<<this->mostrarEndereco();
-        this->menu();
-        break;
-
-        case 0:
-            cout << "Saindo." << endl;
+        case 4:
+            cout << this->mostrarMeio();
+            this->menu();
             break;
 
-        default:
-            cout << "Opcao Invalida. Insira novamente" << endl;
+        case 5:
+            cout << this->mostrarEndereco();
             this->menu();
+            break;
+
+        case 6:
+            this->imprimir();
+            this->menu();
+            break;    
+
+        case 0:
+        cout << "Saindo." << endl;
+        break;
+
+        default:
+        cout << "Opcao Invalida. Insira novamente" << endl;
+        this->menu();
     }
-
 }
 
-void Pilha::inserir() {
+void Pilha::inserir(){
 
-    cout << "Digite o valor para empilhar: ";
-    aux = (struct no*) malloc(sizeof (aux));
-    cin >> aux ->valor;
+    cout<<"Digite o elemento para inserir na Pilha... " << endl;
+    aux = (struct no*) malloc (sizeof(aux));
+    cin >> aux->valor;
 
-    this->aux->ant = this->topo;
-    this->topo = this->aux;
-
+    aux ->ant = topo;
+    topo = aux;
 }
 
-bool Pilha::vazio(struct no *recebido) {
+bool Pilha::estavazio(struct no* recebido){
 
-    if (recebido == NULL)
+    if(recebido == NULL){
         return true;
-    else
-        return false;
-
+    }
+    return false;
 }
 
-void Pilha::remover() {
+void Pilha::remover(){
 
-    if (!vazio(this->topo)) {
-        this->aux = this->topo;
-        this->topo = this->topo->ant;
-        cout << "\nO elemento desempilhado foi: " << this->aux->valor << endl;
-        free(this->aux);
-    }
+     if(!estavazio(topo)){
+        aux = topo;
+        topo = topo ->ant;
+        cout<<"Elemento Removido com Sucesso! " << "[" << aux ->valor << "]" << endl;
+        delete aux;
+     }
 }
 
-void Pilha::mostrar() {
+bool Pilha::pesquisar(){
 
-    aux = topo;
-    while (!vazio(aux->ant)) {
-        cout << aux -> valor << endl;
-        aux = aux->ant;
+    int pesquisa =0;
+
+    cout<<"Digite o elemento para ser pesquisado... " << endl;
+    cin >> pesquisa;
+
+    for(aux = topo; aux != NULL; aux = aux->ant){
+        if(pesquisa == aux->valor){
+            cout<<"Elemento Encontrado! " << aux ->valor << endl;
+            return true;
+        }
     }
-    cout << aux->valor << endl;
+    cout<<"Elemento nao encontrado! " << aux ->valor << endl;
+    return false;
 }
 
 int Pilha::repartirMeio(){
-    int meio=0;
-    int qtde =1;
-    aux = topo;
-    
-    while(aux != NULL){
-        aux = aux -> ant;
-        qtde++;
-    }
-    meio = qtde/2;
-    return meio;
 
+    int contador = 1;
+    int meio = 0;
+
+    for(aux = topo; aux != NULL; aux = aux ->ant){
+        contador++;
+    }
+    meio = contador/2;
+    return meio;
+}
+
+int Pilha::mostrarMeio(){
+
+    int contador = 1;
+    int meio = this->repartirMeio();
+
+    for(aux = topo; aux != NULL; aux = aux ->ant){
+        if(contador == meio){
+            return aux ->valor;
+        }
+        contador++;
+    }
 }
 
 struct no* Pilha::mostrarEndereco(){
 
-    int meio= this->repartirMeio();
-    int cont =1;
-    aux = topo;
-
-    while(aux != NULL){
-
-        if(cont == meio){
-           return aux;        
-           //cout << aux << endl;
-        }
-        aux = aux ->ant;
-        cont++;
-       
-    }
-}
-
-int Pilha::mostrarValorMeio(){
-
-    int contador =1;
+    int contador = 1;
     int meio = this->repartirMeio();
-    aux = topo;
 
-    while(aux != NULL){
-        if(meio == contador){
-            return aux -> valor;
+    for(aux = topo; aux != NULL; aux = aux ->ant){
+        if(contador == meio){
+            return aux;
         }
-        aux = aux ->ant;
         contador++;
     }
-
 }
 
-bool Pilha::pesquisar() {
-
-    int chave;
-    cout << "Digite um valor para verificar se esta empilhado: ";
-    cin >> chave;
-
-    for (aux = topo; aux != NULL; aux = aux->ant) {
-        if (chave == this->aux->valor) {
-            cout << "Valor esta empilhado... " << aux ->valor << endl;
-            return true;
-        }     
+void Pilha::imprimir(){
+    
+    aux = topo;
+    cout<< endl;
+    while(aux != NULL){
+        cout<< aux ->valor << endl;
+        aux = aux ->ant;
     }
-    cout << "Valor nao esta empilhado... " << aux ->valor << endl;
-    return false;
+
 }
