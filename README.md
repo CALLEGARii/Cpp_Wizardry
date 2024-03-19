@@ -1,1 +1,1 @@
-# Aqui estão algumas pastas de c++ para estudos!!!
+# Here are some c++ folders for studies!!!
